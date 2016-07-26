@@ -1,1 +1,275 @@
-"use strict";!function(){var t={app:angular.module("bstar.app",[])};window.bstar=t}(),function(t){function e(t){var e=new ScrollMagic.Controller({globalSceneOptions:{triggerHook:"onLeave"}});return new function(){this.controller=e,this.get=function(){return window.scrollY},this.addScene=function(t,e){var n=new ScrollMagic.Scene({triggerElement:t});return e&&e(n),n.addTo(this.controller),this}}}t.app.service("pos",e)}(window.bstar),function(t){function e(t,e,r,i,o){t.split=!1;var c=n(),l=0,a=function(t){return function(){"next"==t&&(l=l>=c.length-1?c.length-1:l+1),"prev"==t&&(l=l<=0?0:l-1),u()}};t.next=a("next"),t.prev=a("prev");var u=function(){r.hash(t.getSlide()),i(),t.$apply()};t.goto=function(t){t&&(l=c.indexOf(t),u())},t.getSlide=function(){return c[l]},e.addEventListener("mousewheel",function(e){e.preventDefault();var n={UP:e.deltaY>0,DN:e.deltaY<0};n.UP?t.next():n.DN&&t.prev()}),o(function(){t.goto(r.hash())},1e3)}function n(){var t=document.querySelectorAll("a[scroll-to]");return Array.prototype.slice.call(t).map(function(t){return t.getAttribute("scroll-to")})}t.app.controller("app_c",e)}(window.bstar),function(t){function e(){return{restrict:"E",link:function(t,e,n){r.then(function(n){e.append(n.documentElement);var r=d3.select("svg#root");Object.keys(i).forEach(function(e){r.select("#"+e).on("click",function(){var e=i[this.getAttribute("id")];t.goto(e)})}),t.svg=r})}}}var n="/public/images/one-brightstar.svg",r=(window.innerHeight,new Promise(function(t,e){d3.xml(n).mimeType("image/svg+xml").get(function(n,r){return n?e(n):t(r)})})),i={target0:"Goals",target1:"Mantra",target2:"Strategy",target3:"Values",target4:"Values",target5:"Values",target6:"Values",target7:"Values"};return t.app.directive("bstarOneSvg",e)}(window.bstar),function(t){function e(){return{restrict:"A",scope:{useSlide:"="},template:"<div ng-include='getSlide()'></div>",link:function(t,e,n){var r="/public/slides/"+n.useSlide;t.getSlide=function(){return r}}}}function n(){return{restrict:"A",link:function(t,e,n){e.on("click",function(e){t.goto(n.scrollTo)})}}}function r(t,e){var n={Home:function(t){function e(e){return function(n){t.split=e,t.$apply()}}this.on("leave",e(!0)),this.on("enter",e(!1))}};return{restrict:"C",link:function(e,r,i){var o=i.id,c=document.querySelectorAll("a[scroll-to='"+o+"']")[0];t.addScene(r[0],function(t){c&&(t.duration(function(){return window.innerHeight}),t.setClassToggle(c,"active"),n.hasOwnProperty(o)&&n[o].call(t,e,r,i))})}}}t.app.directive("slide",r),t.app.directive("scrollTo",n),t.app.directive("useSlide",e)}(window.bstar);
+"use strict";
+
+(function(){
+    var ns = {
+        app: angular.module('bstar.app', []),
+    };
+
+    window.bstar = ns;
+})();
+(function(ns){
+
+    ns.app.service('pos', Service);
+
+
+    function Service($location)
+    {
+
+        var controller = new ScrollMagic.Controller({
+            globalSceneOptions: {
+                triggerHook: 'onLeave'
+            }
+        });
+
+        return new (function PositionService()
+        {
+            this.controller = controller;
+
+            /**
+             * Return the current window scrollY position.
+             * @returns {Number}
+             */
+            this.get = function()
+            {
+                return window.scrollY;
+            };
+
+            /**
+             * Add a scene to the scroll magic controller.
+             * @param element string|element
+             * @param callback function
+             * @returns PositionService
+             */
+            this.addScene = function(element, callback)
+            {
+                var scene = new ScrollMagic.Scene({
+                    triggerElement: element
+                });
+                if (callback) callback(scene);
+
+                scene.addTo(this.controller);
+                return this;
+            }
+        })();
+    }
+
+
+
+})(window.bstar);
+(function(ns){
+
+    ns.app.controller('app_c', AppController);
+    //ns.app.controller('nav_c', NavController);
+
+    function AppController($scope, $window, $location, $anchorScroll, $timeout)
+    {
+        $scope.split = false;
+
+        var slides = getSlideList();
+
+        var selected = 0;
+
+        var change = function(direction)
+        {
+            return function()
+            {
+                if (direction == 'next') selected = selected >= slides.length-1 ? slides.length-1 : selected+1;
+                if (direction == 'prev') selected = selected <= 0 ? 0 : selected-1;
+                go();
+            }
+        };
+
+        $scope.next = change('next');
+        $scope.prev = change('prev');
+
+        var go = function()
+        {
+            $location.hash($scope.getSlide());
+            $anchorScroll();
+            $scope.$apply();
+        };
+
+        $scope.goto = function(hash)
+        {
+            if (hash) {
+                selected = slides.indexOf(hash);
+                go();
+            }
+        };
+
+        $scope.getSlide = function()
+        {
+            return slides[selected];
+        };
+
+        $window.addEventListener('mousewheel', function(e)
+        {
+            e.preventDefault();
+            var direction = {
+                UP: e.deltaY > 0,
+                DN: e.deltaY < 0
+            };
+            if (direction.UP) {
+                $scope.next();
+            } else if (direction.DN) {
+                $scope.prev();
+            }
+        });
+
+
+
+        $timeout(function(){
+            $scope.goto($location.hash());
+        },1000);
+    }
+
+    /**
+     * Return an array of the slide names (the ID attributes).
+     * @returns {*}
+     */
+    function getSlideList()
+    {
+        var slides = document.querySelectorAll("a[scroll-to]");
+
+        return Array.prototype.slice.call(slides).map(function(element) {
+            return element.getAttribute('scroll-to');
+        })
+    }
+
+
+})(window.bstar);
+(function(ns){
+
+    var url = "/public/images/one-brightstar.svg";
+    var _svg = new Promise(function(resolve,reject)
+    {
+        d3.xml(url).mimeType("image/svg+xml").get(function(err,xml)
+        {
+            return err ? reject(err) : resolve(xml);
+        });
+    });
+
+    var targets = {
+        target0: "Goals",
+        target1: "Mantra",
+        target2: "Strategy",
+        target3: "Values",
+        target4: "Values",
+        target5: "Values",
+        target6: "Values",
+        target7: "OneBrightstar",
+    };
+
+    function SVGDirective()
+    {
+        return {
+            restrict:"E",
+            link: function($scope,$element,$attrs)
+            {
+                _svg.then(function(xml) {
+                    $element.append(xml.documentElement);
+                    var svg = d3.select("svg#root");
+
+                    Object.keys(targets).forEach(function(key) {
+                        svg.select('#'+key).on('click', function(){
+                            var target = targets[this.getAttribute('id')];
+                            $scope.goto(target);
+                        });
+                    });
+
+
+                    $scope.svg = svg;
+                })
+            }
+        };
+    }
+
+    return ns.app.directive('bstarOneSvg', SVGDirective);
+
+})(window.bstar);
+
+
+
+(function(ns){
+
+    ns.app.directive('slide', SlideDirective);
+    ns.app.directive('scrollTo', ScrollToDirective);
+    ns.app.directive('useSlide', UseSlideDirective);
+
+    function UseSlideDirective()
+    {
+        return {
+            restrict:"A",
+            scope: {
+                useSlide: "="
+            },
+            template:"<div ng-include='getSlide()'></div>",
+            link: function($scope,$element,$attrs)
+            {
+                var templateUrl = "/public/slides/"+$attrs.useSlide;
+                $scope.getSlide = function()
+                {
+                    return templateUrl;
+                }
+            }
+        }
+    }
+
+    function ScrollToDirective()
+    {
+        return {
+            restrict:"A",
+            link: function($scope,$element,$attrs)
+            {
+                $element.on('click', function(event){
+                    $scope.goto($attrs.scrollTo);
+                });
+            }
+        }
+    }
+
+
+    function SlideDirective(pos,$window)
+    {
+        var Action = {
+            "Home" : function($scope)
+            {
+                function split(boolean) {
+                    return function(e) {
+                        $scope.split = boolean;
+                        $scope.$apply();
+                    }
+                }
+                this.on('leave', split(true));
+                this.on('enter', split(false));
+            }
+        };
+        return {
+            restrict:"C",
+            link: function($scope,$element,$attrs)
+            {
+                var id = $attrs.id;
+                var link = document.querySelectorAll("a[scroll-to='"+id+"']")[0];
+
+                pos.addScene($element[0], function(scene){
+                    if (! link) {
+                        return;
+                    }
+                    scene.duration(function(){
+                        return window.innerHeight;
+                    });
+                    scene.setClassToggle(link, 'active');
+
+                    if (Action.hasOwnProperty(id)) {
+                        Action[id].call(scene, $scope,$element,$attrs);
+                    }
+                });
+            }
+        };
+    }
+
+
+
+})(window.bstar);
+
+

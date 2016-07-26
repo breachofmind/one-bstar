@@ -1,10 +1,6 @@
 (function(ns){
 
-    var url    = "/public/images/one-brightstar.svg";
-    var margin = {top:30, right:30, bottom:30, left:30};
-    var width = 300;
-    var height = window.innerHeight;
-
+    var url = "/public/images/one-brightstar.svg";
     var _svg = new Promise(function(resolve,reject)
     {
         d3.xml(url).mimeType("image/svg+xml").get(function(err,xml)
@@ -21,7 +17,7 @@
         target4: "Values",
         target5: "Values",
         target6: "Values",
-        target7: "Values",
+        target7: "OneBrightstar",
     };
 
     function SVGDirective()
