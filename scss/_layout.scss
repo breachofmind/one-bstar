@@ -1,0 +1,78 @@
+html {background:$primary;}
+
+// --------------------------------------------------------------------
+// Navigation
+// --------------------------------------------------------------------
+#MainNav {
+	z-index:100;
+	position:fixed; left:0; top:0; bottom:0; width:$nav-width; background:darken($primary,10%);
+	padding:30px;
+}
+
+.link-list {
+	padding-left:42px;
+	a {
+		color: $primary-light;
+		font-size:1.5em;
+		display:block;
+		padding:8px 0;
+	}
+	a.active {
+		color:white;
+		position:relative;
+		&:before {
+			content:url(/public/images/icon-mountain.svg);
+			display:block; height:30px; width:30px;
+			position:absolute; left:-35px;
+		}
+	}
+}
+
+// --------------------------------------------------------------------
+// Slide
+// --------------------------------------------------------------------
+.slide {
+	height:100vh;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+
+#Slides {
+	background:white;
+}
+#Content {
+	padding-left:50vw;
+	.slide {
+		> div {padding:30px;}
+		h2,h3,h4 {text-align:center;}
+		h2 {font-size:2.5em; font-weight:700;}
+		h3 {font-size:2em;}
+		//p {font-size:2em; font-weight:300; color: #a8a8a8;}
+	}
+}
+#MainSlide {
+	height:100vh;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	flex-direction:column;
+	background:$primary;
+	z-index:1;
+	padding-left:0;
+	position:fixed;
+	left:$nav-width;  right:0; top:0;
+	svg {height:70vh;}
+}
+body.split {
+	#MainSlide {
+		right:50vw;
+	}
+}
+
+#Headline {
+	text-align:center;
+	padding:20px;
+	h1 {color:white; font-size:3em;}
+	p {color:$primary-light; font-size:1em; width:100%; max-width:500px; margin:0 auto;}
+}

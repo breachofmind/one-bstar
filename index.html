@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>One Brightstar</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="/public/lib.css">
+		<link rel="stylesheet" href="/public/app.css">
+		<script src="/public/lib.js"></script>
+		<script src="/public/src.js"></script>
+		<base href="/">
+	</head>
+	<body ng-controller="app_c" ng-app="bstar.app" ng-class="{split:split}" data-slide="{{getSlide()}}">
+
+		<nav id="MainNav">
+			<img src="/public/images/brightstar.png" alt="Brightstar" class="logo">
+			<div class="link-list">
+				<a href="javascript:;" scroll-to="Home">Home</a>
+				<a href="javascript:;" scroll-to="Goals">Goals</a>
+				<a href="javascript:;" scroll-to="Mantra">Mantra</a>
+				<a href="javascript:;" scroll-to="Strategy">Strategy</a>
+				<a href="javascript:;" scroll-to="Values">Values</a>
+				<a href="javascript:;" scroll-to="OneBrightstar">One</a>
+			</div>
+		</nav>
+
+		<main id="Slides">
+
+			<section id="MainSlide">
+
+				<div>
+					<bstar-one-svg></bstar-one-svg>
+				</div>
+
+				<div id="Headline">
+					<h1>Boldly Serving Wireless</h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem distinctio modi nisi perspiciatis quas repudiandae velit. Impedit, odio rem.</p>
+				</div>
+			</section>
+
+
+			<div id="Content" class="content">
+				<section id="Home" class="slide"></section>
+				<section id="Goals" class="slide" use-slide="slide-goals.html"></section>
+				<section id="Mantra" class="slide" use-slide="slide-mantra.html"></section>
+				<section id="Strategy" class="slide" use-slide="slide-strategy.html"></section>
+				<section id="Values" class="slide" use-slide="slide-values.html"></section>
+				<section id="OneBrightstar" class="slide" use-slide="slide-brightstar.html"></section>
+			</div>
+
+
+		</main>
+
+	</body>
+</html>

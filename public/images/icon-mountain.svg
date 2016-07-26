@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.11 32.18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffffff;
+      }
+    </style>
+  </defs>
+  <title>icon-mountain</title>
+  <g id="Icon" data-name="Isolation Mode">
+    <g>
+      <polygon class="cls-1" points="30.86 31.19 31.43 32.18 48.11 32.18 26.77 0 19.37 11.15 30.86 31.19"/>
+      <polygon class="cls-1" points="0 32.18 29.13 32.18 14.56 6.78 0 32.18"/>
+    </g>
+  </g>
+</svg>

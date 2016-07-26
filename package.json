@@ -1,0 +1,37 @@
+{
+  "name": "one-bstar",
+  "version": "1.0.0",
+  "description": "An interactive graphic for our vision and values rollout",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp && lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/breachofmind/one-bstar.git"
+  },
+  "author": "Mike Adamczyk <mike-adamczyk@brightstar.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/breachofmind/one-bstar/issues"
+  },
+  "homepage": "https://github.com/breachofmind/one-bstar#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.11",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify": "0.0.13",
+    "gulp-sass": "^2.3.2",
+    "lite-server": "^2.2.2"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "bluebird": "^3.4.1",
+    "bulma": "^0.1.0",
+    "d3": "^4.1.1",
+    "gsap": "^1.19.0",
+    "scrollmagic": "^2.0.5"
+  }
+}

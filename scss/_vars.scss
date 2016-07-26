@@ -1,0 +1,19 @@
+$primary: #EF4036;
+
+$primary-light: lighten($primary,30%);
+
+// --------------------------------------------------------------------
+// Layout
+// --------------------------------------------------------------------
+$nav-width: 200px;
+$content-left: 50vw;
+$image-right:100 - $content-left;
+$image-height:65vh;
+
+// --------------------------------------------------------------------
+// Easings
+// --------------------------------------------------------------------
+$easeOutExpo: 	cubic-bezier(0.19, 1, 0.22, 1);
+$easeInExpo: 	cubic-bezier(0.95, 0.05, 0.795, 0.035);
+$easeInOutExpo: cubic-bezier(1, 0, 0, 1);
+$easeOutQuint: 	cubic-bezier(0.23, 1, 0.32, 1);

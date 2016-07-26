@@ -1,0 +1,42 @@
+bstar-one-svg {
+	display:block;
+}
+bstar-one-svg svg {
+	width:100%;
+	#canvas >g {
+		cursor:pointer;
+		* {transition: all 200ms;}
+
+	}
+}
+
+body.popped #canvas >g, #canvas >g:hover {
+	* {fill:$primary-light;}
+	#text0 {transform:translateY(-10px); } // #1 Mobile Services Leader
+	#text1 {transform:translateX(-10px); } // Boldly Serving Wireless
+	#text2 {transform:translateX(10px); }  // 2020 Strat
+	#text3 {transform:translateX(-15px); } // Think Customer First
+	#text4 {transform:translateX(15px); } // Earned Trust
+	#text5 {transform:translateX(-8px); } // Inspired Teamwork
+	#text6 {transform:translateX(6px); } // Relentless pursuit of excellence
+	#text7 {transform:translateY(10px); } // brightstar
+}
+body[data-slide="Goals"] {
+	#canvas #text0 {transform:translateY(-10px); * {fill:black;}}
+}
+
+body[data-slide="Mantra"] {
+	#canvas #text1 {transform:translateX(-10px); * {fill:black;}}
+}
+body[data-slide="Strategy"] {
+	#canvas #text2 {transform:translateX(10px); * {fill:black;}}
+}
+body[data-slide="Values"] {
+	#canvas #text3 {transform:translateX(-15px); * {fill:black;}}
+	#canvas #text4 {transform:translateX(15px); * {fill:black;}}
+	#canvas #text5 {transform:translateX(-8px); * {fill:black;}}
+	#canvas #text6 {transform:translateX(6px); * {fill:black;}}
+}
+body[data-slide="OneBrightstar"] {
+	#canvas #text7 {transform:translateY(10px); * {fill:black;}}
+}

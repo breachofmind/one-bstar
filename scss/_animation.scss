@@ -1,0 +1,24 @@
+#Headline {
+	transition:opacity 200ms linear 500ms, margin-top 500ms $easeOutQuint 300ms;
+	opacity:1; margin-top:0;
+}
+#Content .slide {
+	transition:opacity 300ms linear 300ms;
+	opacity:0;
+}
+
+#MainSlide {
+	transition:right 700ms $easeOutExpo;
+}
+
+body.split {
+	#Content .slide {
+		opacity:1;
+	}
+	#Headline {
+		opacity:0;
+		margin-top:-100px;
+		transition:opacity 200ms, margin-top 500ms;
+	}
+}
+
