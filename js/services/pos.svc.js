@@ -1,18 +1,18 @@
 (function(ns){
 
-    ns.app.service('pos', Service);
+    ns.app.service('pos', PositionService);
 
 
-    function Service($location)
+    function PositionService($location)
     {
 
         var controller = new ScrollMagic.Controller({
             globalSceneOptions: {
-                triggerHook: 'onLeave'
+                //triggerHook: 'onLeave'
             }
         });
 
-        return new (function PositionService()
+        return new (function PositionServiceObject()
         {
             this.controller = controller;
 

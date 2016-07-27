@@ -6,7 +6,7 @@ var prefix = require('gulp-autoprefixer');
 var minJs  = require('gulp-minify');
 var minCss = require('gulp-clean-css');
 
-var BUILDPATH = "./public/";
+var BUILDPATH = "./public/static";
 var LIBPATH = "./node_modules/";
 var SRCPATH = "./js/";
 
@@ -16,13 +16,15 @@ var LIB = [
     LIBPATH + 'd3/build/d3.min.js',
     LIBPATH + 'scrollmagic/scrollmagic/minified/ScrollMagic.min.js',
     //LIBPATH + 'gsap/src/minified/TimelineLite.min.js',
-    //LIBPATH + 'gsap/src/minified/TweenLite.min.js',
-    //LIBPATH + 'gsap/src/minified/easing/EasePack.min.js',
+    LIBPATH + 'gsap/src/minified/TweenLite.min.js',
+    LIBPATH + 'gsap/src/minified/easing/EasePack.min.js',
+    LIBPATH + 'gsap/src/minified/plugins/ScrollToPlugin.min.js'
 ];
 
 var SRC = [
     SRCPATH + 'main.js',
     SRCPATH + 'services/pos.svc.js',
+    SRCPATH + 'services/mousewheel.svc.js',
     SRCPATH + 'controllers/app.c.js',
     SRCPATH + 'directives/svg.dir.js',
     SRCPATH + 'directives/slide.dir.js',

@@ -1,3 +1,5 @@
+$svg-select-color: black !default;
+
 bstar-one-svg {
 	display:block;
 }
@@ -6,7 +8,6 @@ bstar-one-svg svg {
 	#canvas >g {
 		cursor:pointer;
 		* {transition: all 200ms;}
-
 	}
 }
 
@@ -22,21 +23,21 @@ body.popped #canvas >g, #canvas >g:hover {
 	#text7 {transform:translateY(10px); } // brightstar
 }
 body[data-slide="Goals"] {
-	#canvas #text0 {transform:translateY(-10px); * {fill:black;}}
+	#canvas #text0 * {fill:$svg-select-color;}
 }
 
 body[data-slide="Mantra"] {
-	#canvas #text1 {transform:translateX(-10px); * {fill:black;}}
+	#canvas #text1 * {fill:$svg-select-color;}
 }
 body[data-slide="Strategy"] {
-	#canvas #text2 {transform:translateX(10px); * {fill:black;}}
+	#canvas #text2 * {fill:$svg-select-color;}
 }
 body[data-slide="Values"] {
-	#canvas #text3 {transform:translateX(-15px); * {fill:black;}}
-	#canvas #text4 {transform:translateX(15px); * {fill:black;}}
-	#canvas #text5 {transform:translateX(-8px); * {fill:black;}}
-	#canvas #text6 {transform:translateX(6px); * {fill:black;}}
+	#canvas #text3 * {fill:$svg-select-color;}
+	#canvas #text4 * {fill:$svg-select-color;}
+	#canvas #text5 * {fill:$svg-select-color;}
+	#canvas #text6 * {fill:$svg-select-color;}
 }
 body[data-slide="OneBrightstar"] {
-	#canvas #text7 {transform:translateY(10px); * {fill:black;}}
+	#canvas #text7 * {fill:$svg-select-color;}
 }

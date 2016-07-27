@@ -1,6 +1,6 @@
 (function(ns){
 
-    var url = "/public/images/one-brightstar.svg";
+    var url = "/images/one-brightstar.svg";
     var _svg = new Promise(function(resolve,reject)
     {
         d3.xml(url).mimeType("image/svg+xml").get(function(err,xml)

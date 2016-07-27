@@ -9,19 +9,19 @@
 })();
 (function(ns){
 
-    ns.app.service('pos', Service);
+    ns.app.service('pos', PositionService);
 
 
-    function Service($location)
+    function PositionService($location)
     {
 
         var controller = new ScrollMagic.Controller({
             globalSceneOptions: {
-                triggerHook: 'onLeave'
+                //triggerHook: 'onLeave'
             }
         });
 
-        return new (function PositionService()
+        return new (function PositionServiceObject()
         {
             this.controller = controller;
 
@@ -58,10 +58,49 @@
 })(window.bstar);
 (function(ns){
 
-    ns.app.controller('app_c', AppController);
-    //ns.app.controller('nav_c', NavController);
+    ns.app.service('mousewheel', MouseWheelService);
 
-    function AppController($scope, $window, $location, $anchorScroll, $timeout)
+    function MouseWheelService($window)
+    {
+        function extendEvent(event)
+        {
+            // Firefox delta needs to be reversed.
+            if (event.type == 'DOMMouseScroll') {
+                event.deltaY = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+            }
+            event.direction = {
+                UP: event.deltaY > 0,
+                DN: event.deltaY < 0
+            }
+        }
+
+        return function(mouseWheelHandler)
+        {
+
+            // IE9, Chrome, Safari, Opera
+            $window.addEventListener('mousewheel', function(event){
+                extendEvent(event);
+                mouseWheelHandler(event);
+            });
+
+            // Firefox
+            $window.addEventListener('DOMMouseScroll', function(event) {
+                extendEvent(event);
+                mouseWheelHandler(event);
+            })
+        }
+    }
+
+
+
+})(window.bstar);
+(function(ns){
+
+    ns.app.controller('app_c', AppController);
+
+    ns.app.value('$anchorScroll', angular.noop);
+
+    function AppController($scope, $window, $location, $anchorScroll, $timeout, mousewheel)
     {
         $scope.split = false;
 
@@ -84,8 +123,10 @@
 
         var go = function()
         {
-            $location.hash($scope.getSlide());
-            $anchorScroll();
+            var elementId = $scope.getSlide();
+
+            TweenLite.to(window,0.6,{scrollTo:"#"+elementId, ease:Expo.easeOut});
+            $location.hash(elementId);
             $scope.$apply();
         };
 
@@ -102,20 +143,11 @@
             return slides[selected];
         };
 
-        $window.addEventListener('mousewheel', function(e)
-        {
+        mousewheel(function(e) {
             e.preventDefault();
-            var direction = {
-                UP: e.deltaY > 0,
-                DN: e.deltaY < 0
-            };
-            if (direction.UP) {
-                $scope.next();
-            } else if (direction.DN) {
-                $scope.prev();
-            }
+            if (e.direction.UP) return $scope.next();
+            if (e.direction.DN) return $scope.prev();
         });
-
 
 
         $timeout(function(){
@@ -140,7 +172,7 @@
 })(window.bstar);
 (function(ns){
 
-    var url = "/public/images/one-brightstar.svg";
+    var url = "/images/one-brightstar.svg";
     var _svg = new Promise(function(resolve,reject)
     {
         d3.xml(url).mimeType("image/svg+xml").get(function(err,xml)
@@ -206,7 +238,7 @@
             template:"<div ng-include='getSlide()'></div>",
             link: function($scope,$element,$attrs)
             {
-                var templateUrl = "/public/slides/"+$attrs.useSlide;
+                var templateUrl = "/slides/"+$attrs.useSlide;
                 $scope.getSlide = function()
                 {
                     return templateUrl;

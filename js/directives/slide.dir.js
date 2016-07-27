@@ -14,7 +14,7 @@
             template:"<div ng-include='getSlide()'></div>",
             link: function($scope,$element,$attrs)
             {
-                var templateUrl = "/public/slides/"+$attrs.useSlide;
+                var templateUrl = "/slides/"+$attrs.useSlide;
                 $scope.getSlide = function()
                 {
                     return templateUrl;

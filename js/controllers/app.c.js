@@ -1,9 +1,10 @@
 (function(ns){
 
     ns.app.controller('app_c', AppController);
-    //ns.app.controller('nav_c', NavController);
 
-    function AppController($scope, $window, $location, $anchorScroll, $timeout)
+    ns.app.value('$anchorScroll', angular.noop);
+
+    function AppController($scope, $window, $location, $anchorScroll, $timeout, mousewheel)
     {
         $scope.split = false;
 
@@ -26,8 +27,10 @@
 
         var go = function()
         {
-            $location.hash($scope.getSlide());
-            $anchorScroll();
+            var elementId = $scope.getSlide();
+
+            TweenLite.to(window,0.6,{scrollTo:"#"+elementId, ease:Expo.easeOut});
+            $location.hash(elementId);
             $scope.$apply();
         };
 
@@ -44,20 +47,11 @@
             return slides[selected];
         };
 
-        $window.addEventListener('mousewheel', function(e)
-        {
+        mousewheel(function(e) {
             e.preventDefault();
-            var direction = {
-                UP: e.deltaY > 0,
-                DN: e.deltaY < 0
-            };
-            if (direction.UP) {
-                $scope.next();
-            } else if (direction.DN) {
-                $scope.prev();
-            }
+            if (e.direction.UP) return $scope.next();
+            if (e.direction.DN) return $scope.prev();
         });
-
 
 
         $timeout(function(){

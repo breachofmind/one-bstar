@@ -1,4 +1,5 @@
 {
   "port": 8001,
-  "files": ["index.html", "public/*.css", "js/**/*.js"]
+  "files": ["index.html", "public/static/*.css", "js/**/*.js"],
+  "server": "public"
 }
