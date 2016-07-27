@@ -2,6 +2,9 @@
 	transition:opacity 200ms linear 500ms, margin-top 500ms $easeOutQuint 300ms;
 	opacity:1; margin-top:0;
 }
+#Content {
+	transition:margin 700ms $easeOutExpo;
+}
 #Content .slide {
 	transition:opacity 300ms linear 300ms;
 	opacity:0;
@@ -23,3 +26,12 @@ body.split {
 	}
 }
 
+body {
+	animation: gradientBg 15s ease infinite;
+}
+
+@keyframes gradientBg {
+	0%{background-position:0% 50%}
+	50%{background-position:100% 50%}
+	100%{background-position:0% 50%}
+}

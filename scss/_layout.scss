@@ -1,12 +1,16 @@
-html {background:$primary;}
+body {
+	background: linear-gradient(182deg, #ef4036, #a82119);
+	background-size: 400% 400%;
+}
 
 // --------------------------------------------------------------------
 // Navigation
 // --------------------------------------------------------------------
 #MainNav {
 	z-index:100;
-	position:fixed; left:0; top:0; bottom:0; width:$nav-width; background:darken($primary,10%);
+	position:fixed; left:0; top:0; bottom:0; width:$nav-width;
 	padding:30px;
+	border-right:1px solid lighten($primary,5%);
 }
 
 .link-list {
@@ -39,12 +43,11 @@ html {background:$primary;}
 	overflow-y:hidden;
 }
 
-#Slides {
-	background:white;
-}
 #Content {
+	margin-left:100vw;
+	z-index:2;
 	background:white;
-	padding-left:50vw;
+	box-shadow:-1px 1px 2px rgba(0,0,0,0.4);
 	.slide {
 		> div {padding:30px; max-width: 600px; width:100%; }
 		h2,h3,h4 {text-align:center; margin-bottom:0.5em; margin-top:0;}
@@ -60,16 +63,20 @@ html {background:$primary;}
 	justify-content:center;
 	align-items:center;
 	flex-direction:column;
-	background:$primary;
 	z-index:1;
 	padding-left:0;
 	position:fixed;
 	left:$nav-width;  right:0; top:0;
 	svg {height:70vh;}
 }
+
+
 body.split {
 	#MainSlide {
 		right:50vw;
+	}
+	#Content {
+		margin-left:50vw;
 	}
 }
 
