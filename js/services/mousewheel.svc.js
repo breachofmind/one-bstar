@@ -8,7 +8,7 @@
         {
             // Firefox delta needs to be reversed.
             if (event.type == 'DOMMouseScroll') {
-                event.deltaY = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+                event.deltaY = -Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
             }
             event.direction = {
                 UP: event.deltaY > 0,
