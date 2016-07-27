@@ -6,7 +6,7 @@
     // We're using a smooth scrolling behavior instead.
     ns.app.value('$anchorScroll', angular.noop);
 
-    function AppController($scope, $window, $location, $anchorScroll, $timeout, mousewheel)
+    function AppController($scope, $location, $timeout, mousewheel)
     {
         $scope.split = false;
 
@@ -15,6 +15,8 @@
          * @type {array}
          */
         var slides = getSlideList();
+
+        $scope.slide = 'Home';
 
         /**
          * Index of the current selected slide in the slides var.
@@ -55,10 +57,10 @@
          */
         var go = function()
         {
-            var elementId = $scope.getSlide();
+            $scope.slide = $scope.getSlide();
 
-            TweenLite.to(window,0.6,{scrollTo:"#"+elementId, ease:Expo.easeOut});
-            $location.hash(elementId);
+            TweenLite.to(window,0.6,{scrollTo:{x:0, y:document.getElementById($scope.slide).offsetTop}, ease:Expo.easeOut});
+            $location.hash($scope.slide);
             $scope.$apply();
         };
 
