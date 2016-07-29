@@ -91,7 +91,6 @@
          * @returns void
          */
         mousewheel(function(e) {
-            e.preventDefault();
             if (e.direction.UP) return $scope.next();
             if (e.direction.DN) return $scope.prev();
         });

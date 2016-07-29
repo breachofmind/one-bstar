@@ -12,6 +12,7 @@
 
 #MainSlide {
 	transition:right 700ms $easeOutExpo;
+	//animation: gradientBg 10s linear infinite;
 }
 
 body.split {
@@ -26,9 +27,6 @@ body.split {
 	}
 }
 
-body {
-	animation: gradientBg 15s ease infinite;
-}
 
 @keyframes gradientBg {
 	0%{background-position:0% 50%}
