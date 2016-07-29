@@ -10,7 +10,7 @@
     });
 
     var targets = {
-        target0: "Goals",
+        target0: "Goal",
         target1: "Mantra",
         target2: "Strategy",
         target3: "Values",
