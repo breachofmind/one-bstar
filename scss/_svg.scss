@@ -22,7 +22,7 @@ body.popped #canvas >g, #canvas >g:hover {
 	#text6 {transform:translateX(6px); } // Relentless pursuit of excellence
 	#text7 {transform:translateY(10px); } // brightstar
 }
-body[data-slide="Goals"] {
+body[data-slide="Goal"] {
 	#canvas #text0 * {fill:$svg-select-color;}
 }
 
