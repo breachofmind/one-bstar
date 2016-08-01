@@ -1,4 +1,8 @@
 $svg-select-color: black !default;
+$svg-select-color-contrast: $primary !default;
+$svg-color:white;
+$svg-color-contrast:black;
+$svg-hover-color: $primary-light;
 
 bstar-one-svg {
 	display:block;
@@ -7,37 +11,46 @@ bstar-one-svg svg {
 	width:100%;
 	#canvas >g {
 		cursor:pointer;
-		* {transition: all 200ms;}
+		* {
+			fill:$svg-color;
+			transition: all 200ms;
+
+		}
+	}
+}
+body.contrast {
+	#canvas > g * {
+		fill:$svg-color-contrast;
 	}
 }
 
-body.popped #canvas >g, #canvas >g:hover {
-	* {fill:$primary-light;}
-	#text0 {transform:translateY(-10px); } // #1 Mobile Services Leader
-	#text1 {transform:translateX(-10px); } // Boldly Serving Wireless
-	#text2 {transform:translateX(10px); }  // 2020 Strat
-	#text3 {transform:translateX(-15px); } // Think Customer First
-	#text4 {transform:translateX(15px); } // Earned Trust
-	#text5 {transform:translateX(-8px); } // Inspired Teamwork
-	#text6 {transform:translateX(6px); } // Relentless pursuit of excellence
-	#text7 {transform:translateY(10px); } // brightstar
-}
-body[data-slide="Goal"] {
-	#canvas #text0 * {fill:$svg-select-color;}
+@mixin slideSvgFill($name, $text, $transform)
+{
+	body[data-slide="#{$name}"] {
+		#canvas #text#{$text} * {fill:$svg-select-color;}
+		&.contrast {
+			#canvas #text#{$text} * {fill:$svg-select-color-contrast;}
+		}
+	}
+	#canvas > g:hover {
+		#text#{$text} {transform:$transform;}
+	}
 }
 
-body[data-slide="Mantra"] {
-	#canvas #text1 * {fill:$svg-select-color;}
+@include slideSvgFill("Goal", 0, translateY(-10px)); // #1 Mobile Services Leader
+@include slideSvgFill("Mantra", 1, translateX(-10px)); // Boldly Serving Wireless
+@include slideSvgFill("Strategy", 2, translateX(10px)); // 2020 Strat
+@include slideSvgFill("Values", 3, translateX(10px)); // Think Customer First
+@include slideSvgFill("Values", 4, translateX(-15px)); // Earned Trust
+@include slideSvgFill("Values", 5, translateX(15px)); // Inspired Teamwork
+@include slideSvgFill("Values", 6, translateX(-8px)); // Relentless pursuit of excellence
+@include slideSvgFill("OneBrightstar", 7, translateY(10px)); // brightstar
+
+#canvas > g:hover *{
+	fill:$svg-hover-color;
 }
-body[data-slide="Strategy"] {
-	#canvas #text2 * {fill:$svg-select-color;}
-}
-body[data-slide="Values"] {
-	#canvas #text3 * {fill:$svg-select-color;}
-	#canvas #text4 * {fill:$svg-select-color;}
-	#canvas #text5 * {fill:$svg-select-color;}
-	#canvas #text6 * {fill:$svg-select-color;}
-}
-body[data-slide="OneBrightstar"] {
-	#canvas #text7 * {fill:$svg-select-color;}
+body.contrast {
+	#canvas > g:hover * {
+		fill:$primary;
+	}
 }

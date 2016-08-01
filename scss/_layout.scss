@@ -5,13 +5,16 @@
 	z-index:100;
 	position:fixed; left:0; top:0; bottom:0; width:$nav-width;
 	padding:30px;
-	border-right:1px solid lighten($primary,5%);
+	//border-right:1px solid lighten($primary,5%);
+	background-color:rgba(0,0,0,0.8);
 }
+
 
 .link-list {
 	padding-left:60px;
 	a {
-		color: $primary-light;
+		transition: color 300ms;
+		color: #c3c3c3;
 		font-size:1.5em;
 		display:block;
 		padding:8px 0;
@@ -69,8 +72,14 @@
 	.slide {
 		> div {padding:30px; max-width: 600px; width:100%; }
 		h2,h3,h4 {text-align:center; margin-bottom:0.5em; margin-top:0;}
+
 		h2 {font-size:2.5em; font-weight:700;}
-		h3 {font-size:2em;}
+		h3 {
+			font-size:1.8em;
+			font-weight:700;
+			color:$primary;
+			text-transform: uppercase;
+		}
 		p,li {font-size:1.3em; font-weight:300; color: #a8a8a8;}
 	}
 }
@@ -89,17 +98,6 @@
 	svg {height:70vh;}
 }
 
-
-
-@keyframes fadeIn {
-	0% {opacity:0;}
-	100% {opacity:1;}
-}
-
-@keyframes fadeOut {
-	0% {opacity:1;}
-	100% {opacity:0;}
-}
 
 
 body.split {
@@ -130,3 +128,20 @@ body.split {
 		margin-right:10px;
 	}
 }
+
+//body.contrast {
+//	#MainNav {
+//		border-right:1px solid #525252;
+//	}
+//	.link-list {
+//		a {
+//			color: #373737;
+//			&:hover, &:focus {
+//				color:black;
+//			}
+//		}
+//		a.active {
+//			color:$primary;
+//		}
+//	}
+//}
