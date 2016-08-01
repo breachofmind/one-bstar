@@ -27,9 +27,57 @@ body.split {
 	}
 }
 
+.preloading-icon {
+	position: absolute;
+	margin: auto;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	width: 15px;
+	height: 15px;
+	border-radius: 100%;
+	box-shadow: 15px 15px rgb(239,64,54), -15px 15px rgb(223,223,223), -15px -15px rgb(239,64,54), 15px -15px rgb(223,223,223);
+	animation: cssload-spin ease infinite 2.2s;
+}
+.preloading-screen {
+	opacity:0;
+	visibility:hidden;
+	position:fixed;
+	z-index:120;
+	top:0; left:0; right:0; bottom:0;
+	background-color:rgba(0,0,0,0.8);
+	transition:opacity 300ms, visibility 0ms linear 300ms;
+	p {
+		text-align:center;
+		color:white;
+		padding-top:55vh;
+	}
+}
+body.loading .preloading-screen {
+	visibility:visible;
+	opacity:1;
+}
 
 @keyframes gradientBg {
 	0%{background-position:0% 50%}
 	50%{background-position:100% 50%}
 	100%{background-position:0% 50%}
+}
+
+
+@keyframes cssload-spin {
+	0%,
+	100% {
+		box-shadow: 15px 15px rgb(239,64,54), -15px 15px rgb(223,223,223), -15px -15px rgb(239,64,54), 15px -15px rgb(223,223,223);
+	}
+	25% {
+		box-shadow: -15px 15px rgb(223,223,223), -15px -15px rgb(239,64,54), 15px -15px rgb(223,223,223), 15px 15px rgb(239,64,54);
+	}
+	50% {
+		box-shadow: -15px -15px rgb(239,64,54), 15px -15px rgb(223,223,223), 15px 15px rgb(239,64,54), -15px 15px rgb(223,223,223);
+	}
+	75% {
+		box-shadow: 15px -15px #dfdfdf, 15px 15px #4f4d49, -15px 15px #dfdfdf, -15px -15px #4f4d49;
+	}
 }

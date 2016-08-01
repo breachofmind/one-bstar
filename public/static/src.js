@@ -106,17 +106,118 @@
 })(window.bstar);
 (function(ns){
 
+    ns.app.service('preload', PreloadService);
+
+    var noop = function() {};
+
+    function PreloadService()
+    {
+        function Preloader()
+        {
+            /**
+             * Objects in the preload queue.
+             * @type {Array}
+             */
+            this.objects = [];
+            this.queue = 0;
+
+            /**
+             * Add an image source to preload.
+             * @param arr
+             * @return Preloader
+             */
+            this.add = function(arr)
+            {
+                if (! Array.isArray(arr)) {
+                    arr = [arr];
+                }
+                arr.forEach(function(src) {
+                    var image = new Image();
+                    image.src = src;
+                    this.objects.push(image);
+
+                }.bind(this));
+
+                return this;
+            };
+
+            /**
+             * Recurse through the images to see if they are done loading.
+             * @type {function(this:Preloader)}
+             */
+            var checkIfDone = function(callback)
+            {
+                for (var i=0; i<this.objects.length; i++) {
+                    var image = this.objects[i];
+
+                    if (! image.complete) {
+                        return false;
+                    }
+                }
+                if (this.queue == 0) return callback();
+
+            }.bind(this);
+
+            /**
+             * Attach event listeners to each preloading image.
+             * @param callback function
+             * @returns void
+             */
+            this.complete = function(callback)
+            {
+                this.queue = this.objects.length;
+
+                var done = function(image) {
+                    this.queue --;
+                    checkIfDone(callback);
+                    image.onload = noop;
+
+                }.bind(this);
+
+                this.objects.forEach(function(image)
+                {
+                    if (image.complete) {
+                        done(image);
+                    } else {
+                        image.onload = function() {
+                            done(image);
+                        }
+                    }
+                }.bind(this))
+            };
+
+
+        }
+
+        return new Preloader();
+    }
+
+
+
+})(window.bstar);
+(function(ns){
+
     ns.app.controller('app_c', AppController);
 
     // Disable the anchorScroll behavior.
     // We're using a smooth scrolling behavior instead.
     ns.app.value('$anchorScroll', angular.noop);
 
-    function AppController($scope, $location, $timeout, mousewheel)
+    var preloadImages = [
+        '/images/bg-1.jpg',
+        '/images/bg-2.jpg',
+        '/images/bg-3.jpg',
+        '/images/bg-4.jpg',
+        '/images/bg-5.jpg'
+    ];
+
+    function AppController($scope, $location, $timeout, mousewheel,preload)
     {
+        $scope.preloading = true;
         $scope.split = false;
 
         var activeImage = "topImage";
+
         $scope.topImage = {
             src: {"background-image":null},
             active: false
@@ -235,6 +336,14 @@
         $timeout(function(){
             $scope.goto($location.hash());
         },1000);
+
+        // When items are preloaded, update the scope.
+        preload.add(preloadImages).complete(function()
+        {
+            $timeout(function(){
+                $scope.preloading = false;
+            },1000);
+        });
     }
 
 

@@ -10,7 +10,7 @@
 		<script src="/static/src.js"></script>
 		<base href="/">
 	</head>
-	<body ng-controller="app_c" ng-app="bstar.app" ng-class="{split:split, contrast:slide.hasContrast}" data-slide="{{slide.id}}">
+	<body ng-controller="app_c" ng-app="bstar.app" ng-class="{split:split, contrast:slide.hasContrast, loading:preloading}" data-slide="{{slide.id}}" class="loading">
 
 		<nav id="MainNav">
 			<a href="https://brightspot.brightstar.com"><img src="/images/brightstar.png" alt="Brightstar" class="logo"></a>
@@ -53,8 +53,11 @@
 				<section id="OneBrightstar" class="slide" use-slide="slide-brightstar.html"></section>
 			</div>
 
-
 		</main>
 
+		<div class="preloading-screen">
+			<div class="preloading-icon"></div>
+			<p>Loading.</p>
+		</div>
 	</body>
 </html>

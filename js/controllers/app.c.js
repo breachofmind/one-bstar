@@ -6,11 +6,21 @@
     // We're using a smooth scrolling behavior instead.
     ns.app.value('$anchorScroll', angular.noop);
 
-    function AppController($scope, $location, $timeout, mousewheel)
+    var preloadImages = [
+        '/images/bg-1.jpg',
+        '/images/bg-2.jpg',
+        '/images/bg-3.jpg',
+        '/images/bg-4.jpg',
+        '/images/bg-5.jpg'
+    ];
+
+    function AppController($scope, $location, $timeout, mousewheel,preload)
     {
+        $scope.preloading = true;
         $scope.split = false;
 
         var activeImage = "topImage";
+
         $scope.topImage = {
             src: {"background-image":null},
             active: false
@@ -129,6 +139,14 @@
         $timeout(function(){
             $scope.goto($location.hash());
         },1000);
+
+        // When items are preloaded, update the scope.
+        preload.add(preloadImages).complete(function()
+        {
+            $timeout(function(){
+                $scope.preloading = false;
+            },1000);
+        });
     }
 
 

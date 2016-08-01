@@ -25,6 +25,7 @@ var SRC = [
     SRCPATH + 'main.js',
     SRCPATH + 'services/pos.svc.js',
     SRCPATH + 'services/mousewheel.svc.js',
+    SRCPATH + 'services/preload.svc.js',
     SRCPATH + 'controllers/app.c.js',
     SRCPATH + 'directives/svg.dir.js',
     SRCPATH + 'directives/slide.dir.js',
