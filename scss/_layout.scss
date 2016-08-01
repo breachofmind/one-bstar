@@ -5,7 +5,6 @@
 	z-index:100;
 	position:fixed; left:0; top:0; bottom:0; width:$nav-width;
 	padding:30px;
-	//border-right:1px solid lighten($primary,5%);
 	background-color:rgba(0,0,0,0.8);
 }
 
@@ -80,7 +79,7 @@
 			color:$primary;
 			text-transform: uppercase;
 		}
-		p,li {font-size:1.3em; font-weight:300; color: #a8a8a8;}
+		p,li {font-size:1.3em; font-weight:300; color: #717171;}
 	}
 }
 
@@ -112,8 +111,15 @@ body.split {
 #Headline {
 	text-align:center;
 	padding:20px;
+	strong {color:inherit;}
 	h1 {color:white; font-size:3em;}
-	p {color:$primary-light; font-size:1em; width:100%; max-width:500px; margin:0 auto;}
+	p {
+		color:$primary-light;
+		font-size:1.2em;
+		width:100%;
+		max-width:550px;
+		margin:0 auto;
+	}
 }
 
 .back-link {
