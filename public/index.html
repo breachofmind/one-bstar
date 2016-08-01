@@ -10,10 +10,10 @@
 		<script src="/static/src.js"></script>
 		<base href="/">
 	</head>
-	<body ng-controller="app_c" ng-app="bstar.app" ng-class="{split:split}" data-slide="{{slide}}">
+	<body ng-controller="app_c" ng-app="bstar.app" ng-class="{split:split, contrast:slide.hasContrast}" data-slide="{{slide.id}}">
 
 		<nav id="MainNav">
-			<img src="/images/brightstar.png" alt="Brightstar" class="logo">
+			<a href="https://brightspot.brightstar.com"><img src="/images/brightstar.png" alt="Brightstar" class="logo"></a>
 			<div class="link-list">
 				<a href="javascript:;" scroll-to="Home">Home</a>
 				<a href="javascript:;" scroll-to="Goal">Goal</a>
@@ -22,12 +22,13 @@
 				<a href="javascript:;" scroll-to="Values">Values</a>
 				<a href="javascript:;" scroll-to="OneBrightstar">1Brightstar</a>
 			</div>
+
+			<a href="https://brightspot.brightstar.com" class="back-link">Back to BrightSpot</a>
 		</nav>
 
 		<main id="Slides">
 
-			<section id="MainSlide">
-
+			<section id="MainSlide" class="has-bg-image">
 				<div>
 					<bstar-one-svg></bstar-one-svg>
 				</div>
@@ -36,13 +37,16 @@
 					<h1>Vision and Values</h1>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad autem distinctio modi nisi perspiciatis quas repudiandae velit. Impedit, odio rem.</p>
 				</div>
+
+				<div class="bg-image bg-image-top" ng-style="topImage.src" ng-class="{active:topImage.active}"></div>
+				<div class="bg-image bg-image-bottom" ng-style="bottomImage.src" ng-class="{active:bottomImage.active}"></div>
 			</section>
 
 
 			<div id="Content" class="content">
 				<section id="Home" class="slide"></section>
-				<section id="Goal" class="slide" use-slide="slide-goal.html"></section>
-				<section id="Mantra" class="slide" use-slide="slide-mantra.html"></section>
+				<section id="Goal" class="slide" use-slide="slide-goal.html" data-bg="/images/bg-1.jpg" data-contrast></section>
+				<section id="Mantra" class="slide" use-slide="slide-mantra.html" data-bg="/images/bg-2.jpg" data-contrast></section>
 				<section id="Strategy" class="slide" use-slide="slide-strategy.html"></section>
 				<section id="Values" class="slide" use-slide="slide-values.html"></section>
 				<section id="OneBrightstar" class="slide" use-slide="slide-brightstar.html"></section>

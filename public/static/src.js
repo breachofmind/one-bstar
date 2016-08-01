@@ -116,46 +116,49 @@
     {
         $scope.split = false;
 
-        /**
-         * The array of slides. This is filled dynamically.
-         * @type {array}
-         */
-        var slides = getSlideList();
-
-        $scope.slide = 'Home';
-
-        /**
-         * Index of the current selected slide in the slides var.
-         * @type {number}
-         */
-        var selected = 0;
-
-        /**
-         * Closure for next and prev methods.
-         * @param direction string next|prev
-         * @returns {Function}
-         */
-        var change = function(direction)
-        {
-            return function()
-            {
-                if (direction == 'next') selected = selected >= slides.length-1 ? slides.length-1 : selected+1;
-                if (direction == 'prev') selected = selected <= 0 ? 0 : selected-1;
-                go();
-            }
+        var activeImage = "topImage";
+        $scope.topImage = {
+            src: {"background-image":null},
+            active: false
         };
+        $scope.bottomImage = {
+            src: {"background-image":null},
+            active: true
+        };
+
+
+        $scope.slideCount = 0;
+        $scope.slideOrder = [];
+        $scope.slideIndex = 0;
+        $scope.slide = {};
+        $scope.previousSlide = {};
+
+
+        /**
+         * Filled in via the slides directive.
+         * @type {{}}
+         */
+        $scope.slides = {};
+
 
         /**
          * Advance the slide.
          * @type {Function}
          */
-        $scope.next = change('next');
+        $scope.next = function()
+        {
+            $scope.slideIndex = $scope.slideIndex >= $scope.slideCount-1 ? $scope.slideCount-1 : $scope.slideIndex+1;
+            go();
+        };
 
         /**
          * Retreat the slide.
          * @type {Function}
          */
-        $scope.prev = change('prev');
+        $scope.prev = function(){
+            $scope.slideIndex = $scope.slideIndex <= 0 ? 0 : $scope.slideIndex-1;
+            go();
+        };
 
         /**
          * Triggers the view to scroll and updates the hash.
@@ -163,34 +166,58 @@
          */
         var go = function()
         {
+            $scope.previousSlide = $scope.slide;
             $scope.slide = $scope.getSlide();
+            TweenLite.to(window,0.6,{
+                scrollTo:{
+                    x:0,
+                    y:$scope.slide.el.offsetTop
+                },
+                ease:Expo.easeOut
+            });
 
-            TweenLite.to(window,0.6,{scrollTo:{x:0, y:document.getElementById($scope.slide).offsetTop}, ease:Expo.easeOut});
-            $location.hash($scope.slide);
+            $location.hash($scope.slide.id);
+            $scope.changeBackground();
             $scope.$apply();
         };
 
         /**
-         * Public method on the scope to move to the given slide.
-         * @param hash string
+         * Switch the slide backgrounds.
          * @returns void
          */
-        $scope.goto = function(hash)
+        $scope.changeBackground = function()
         {
-            if (hash) {
-                selected = slides.indexOf(hash);
+            var previousImage = activeImage;
+            activeImage = activeImage == "topImage" ? "bottomImage" : "topImage";
+
+            $scope[previousImage].active = false;
+            $scope[activeImage].active = true;
+            $scope[previousImage].src["background-image"] = $scope.previousSlide.attrs.bg ? "url("+$scope.previousSlide.attrs.bg+")" : "none";
+            $scope[activeImage].src["background-image"] = $scope.slide.attrs.bg ? "url("+$scope.slide.attrs.bg+")" : "none";
+        };
+
+        /**
+         * Public method on the scope to move to the given slide.
+         * @param id string
+         * @returns void
+         */
+        $scope.goto = function(id)
+        {
+            if (id) {
+                $scope.slideIndex = $scope.slides[id].index;
                 go();
             }
         };
 
         /**
          * Get the current selected slide name.
-         * @returns {string}
+         * @returns {object}
          */
         $scope.getSlide = function()
         {
-            return slides[selected];
+            return $scope.slideOrder[$scope.slideIndex];
         };
+
 
         /**
          * Add cross-browser mousewheel behavior.
@@ -208,19 +235,6 @@
         $timeout(function(){
             $scope.goto($location.hash());
         },1000);
-    }
-
-    /**
-     * Return an array of the slide names (the ID attributes).
-     * @returns {*}
-     */
-    function getSlideList()
-    {
-        var slides = document.querySelectorAll("a[scroll-to]");
-
-        return Array.prototype.slice.call(slides).map(function(element) {
-            return element.getAttribute('scroll-to');
-        })
     }
 
 
@@ -316,6 +330,14 @@
     }
 
 
+    /**
+     * Create a new slide object.
+     * @usage <div class="slide" data-bg="image" use-slide=".html"></div>
+     * @param pos
+     * @param $window
+     * @returns {{restrict: string, link: link}}
+     * @constructor
+     */
     function SlideDirective(pos,$window)
     {
         var Action = {
@@ -331,6 +353,7 @@
                 this.on('enter', split(false));
             }
         };
+
         return {
             restrict:"C",
             link: function($scope,$element,$attrs)
@@ -338,6 +361,7 @@
                 var id = $attrs.id;
                 var link = document.querySelectorAll("a[scroll-to='"+id+"']")[0];
 
+                // Add some scroll magic to this slide element.
                 pos.addScene($element[0], function(scene){
                     if (! link) {
                         return;
@@ -351,6 +375,23 @@
                         Action[id].call(scene, $scope,$element,$attrs);
                     }
                 });
+                var slideObject = {
+                    index: $scope.slideCount,
+                    id: id,
+                    el: $element[0],
+                    attrs: $attrs,
+                    link: link,
+                    hasContrast: $attrs.contrast==""
+                };
+
+                // Attach the object to the scope.
+                $scope.slides[id] = slideObject;
+                $scope.slideOrder[$scope.slideCount] = slideObject;
+                if ($scope.slideCount == 0) {
+                    $scope.slide = slideObject; // Default Slide
+                }
+                $scope.slideCount ++;
+
             }
         };
     }

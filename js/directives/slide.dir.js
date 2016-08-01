@@ -37,6 +37,14 @@
     }
 
 
+    /**
+     * Create a new slide object.
+     * @usage <div class="slide" data-bg="image" use-slide=".html"></div>
+     * @param pos
+     * @param $window
+     * @returns {{restrict: string, link: link}}
+     * @constructor
+     */
     function SlideDirective(pos,$window)
     {
         var Action = {
@@ -52,6 +60,7 @@
                 this.on('enter', split(false));
             }
         };
+
         return {
             restrict:"C",
             link: function($scope,$element,$attrs)
@@ -59,6 +68,7 @@
                 var id = $attrs.id;
                 var link = document.querySelectorAll("a[scroll-to='"+id+"']")[0];
 
+                // Add some scroll magic to this slide element.
                 pos.addScene($element[0], function(scene){
                     if (! link) {
                         return;
@@ -72,6 +82,23 @@
                         Action[id].call(scene, $scope,$element,$attrs);
                     }
                 });
+                var slideObject = {
+                    index: $scope.slideCount,
+                    id: id,
+                    el: $element[0],
+                    attrs: $attrs,
+                    link: link,
+                    hasContrast: $attrs.contrast==""
+                };
+
+                // Attach the object to the scope.
+                $scope.slides[id] = slideObject;
+                $scope.slideOrder[$scope.slideCount] = slideObject;
+                if ($scope.slideCount == 0) {
+                    $scope.slide = slideObject; // Default Slide
+                }
+                $scope.slideCount ++;
+
             }
         };
     }
